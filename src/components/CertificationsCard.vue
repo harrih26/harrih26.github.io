@@ -1,8 +1,8 @@
 <template>
   <v-card class="main-card" elevation="10">
     <v-card-title>
-        <v-icon icon="mdi-briefcase-check" color="primary" size="small"></v-icon> 
-        {{ $t("certifications.title") }}
+      <v-icon icon="mdi-briefcase-check" color="primary" size="small"></v-icon>
+      {{ $t("certifications.title") }}
     </v-card-title>
     <v-card-text>
       <v-btn

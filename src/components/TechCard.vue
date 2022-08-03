@@ -1,8 +1,8 @@
 <template>
   <v-card class="main-card" elevation="10">
     <v-card-title>
-        <v-icon icon="mdi-hammer-wrench" color="primary" size="small"></v-icon> 
-        {{ $t("tech.title") }}
+      <v-icon icon="mdi-hammer-wrench" color="primary" size="small"></v-icon>
+      {{ $t("tech.title") }}
     </v-card-title>
     <v-card-text>
       <div>
