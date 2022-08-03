@@ -28,7 +28,7 @@ const translations = {
       about1:
         "Olen koodari Kuopiosta. Kokemusta löytyy mm. web-kehityksestä, mobiilisovelluksista sekä työpöytäsoftasta.",
       about2:
-        "Keskityn enemmän pellin alla työskentelyyn eli esim. tietokantoihin, integraatioihin ja rajapintoihin mutta olen aina innokas kokeilemaan uutta. Työn laatu ja asiakkaan arvon maksimointi on minulle tärkää.",
+        "Keskityn enemmän pellin alla työskentelyyn eli esim. tietokantoihin, integraatioihin ja rajapintoihin mutta olen aina innokas kokeilemaan uutta. Työn laatu ja asiakkaan arvon maksimointi on minulle tärkeää.",
       email: "Lähetä sähköpostia",
     },
     tech: {
