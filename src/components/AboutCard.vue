@@ -8,9 +8,9 @@
         </v-col>
         <v-col xs="12" md="8" xl="auto">
           <p>
-          {{ $t("about.about1") }} <br /><br />
-          {{ $t("about.about2") }}
-        </p>
+            {{ $t("about.about1") }} <br /><br />
+            {{ $t("about.about2") }}
+          </p>
         </v-col>
       </v-row>
     </v-card-text>
@@ -18,7 +18,7 @@
     <v-card-actions>
       <v-spacer></v-spacer>
       <v-btn
-        color="primary-darken-1"
+        color="primary"
         prepend-icon="mdi-linkedin"
         href="https://www.linkedin.com/in/harri-heikkinen/"
         target="_blank"
@@ -26,7 +26,7 @@
         LinkedIn
       </v-btn>
       <v-btn
-        color="primary-darken-1"
+        color="primary"
         prepend-icon="mdi-email"
         href="mailto:harri.heikkinen8@luukku.com"
       >
