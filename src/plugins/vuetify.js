@@ -10,7 +10,7 @@ const customTheme = {
   colors: {
     background: "#FFFFFF",
     surface: "#FFFFFF",
-    primary: "#489c50",
+    primary: "#406e44",
     "primary-darken-1": "#406e44",
     secondary: "#03DAC6",
     "secondary-darken-1": "#018786",
