@@ -13,7 +13,7 @@
     </v-layout>
 
     <v-footer style="margin-left: auto; margin-right: auto">
-      <small>© {{ new Date().getFullYear() }} — Harri Heikkinen</small>
+      <small @click="$router.push('/snake')">© {{ new Date().getFullYear() }} — Harri Heikkinen</small>
     </v-footer>
   </v-app>
 </template>
@@ -35,3 +35,9 @@ export default {
   },
 };
 </script>
+
+<style>
+small {
+  cursor: pointer;
+}
+</style>
