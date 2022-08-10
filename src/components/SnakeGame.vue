@@ -1,9 +1,32 @@
 <template>
-  <v-row>
-    <v-col cols="12">
-      <canvas ref="board" :width="width" :height="height" />
-    </v-col>
-  </v-row>
+  <v-card class="main-card" elevation="10">
+    <canvas ref="board" width="670" height="600" style="display: block; margin: auto;" />
+  </v-card>
+  <v-card class="main-card" elevation="10">
+    <v-card-title>
+      <v-icon icon="mdi-gamepad" color="primary" size="small"></v-icon>
+      {{ $t("snake.instructions") }}
+    </v-card-title>
+    <v-card-text>
+        <v-row style="margin-top: 10px">
+            <v-col xs="12" md="6" >
+                <p>
+                    <v-icon icon="mdi-alpha-w" color="warning" size="large" />
+                    <v-icon icon="mdi-alpha-a" color="warning" size="large" />
+                    <v-icon icon="mdi-alpha-s" color="warning" size="large" />
+                    <v-icon icon="mdi-alpha-d" color="warning" size="large" />
+                    {{ $t("snake.move") }}
+                </p>
+            </v-col>
+            <v-col xs="12" md="6" >
+                <p>
+                    <v-icon icon="mdi-alpha-i" color="warning" size="large" />
+                    {{ $t("snake.reset") }}
+                </p>
+            </v-col>
+        </v-row>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script lang="ts">
@@ -24,16 +47,6 @@ enum PlayerStates {
 
 export default defineComponent({
   name: "GameCanvas",
-  props: {
-    width: {
-      type: Number,
-      default: 500,
-    },
-    height: {
-      type: Number,
-      default: 500,
-    },
-  },
   data() {
     return {
       interval: 1000 / 60, //Max 60fps

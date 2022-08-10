@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <SnakeGame/>
+    <SnakeGame />
   </v-container>
 </template>
 
@@ -11,11 +11,9 @@ import SnakeGame from "../components/SnakeGame.vue";
 export default defineComponent({
   name: "GameView",
   components: {
-    SnakeGame
-},
+    SnakeGame,
+  },
 });
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
