@@ -25,6 +25,7 @@ const translations = {
       instructions: "How to play",
       move: "Change direction",
       reset: "Reset",
+      return: "Return",
     },
   },
   fi: {
@@ -53,6 +54,7 @@ const translations = {
       title: "Kuinka pelaat",
       move: "Vaihda suuntaa",
       reset: "Aloita alusta",
+      return: "Takaisin",
     },
   },
 };
