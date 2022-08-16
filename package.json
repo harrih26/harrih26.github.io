@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "serve": "vite preview",
-    "build": "vite build",
+    "copy": "cd dist && copy index.html 404.html",
+    "build": "vite build && npm run copy",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
     "dev": "vite",
     "preview": "vite preview --port 4173"
