@@ -1,4 +1,11 @@
 <template>
+  <v-container class="main-card">
+    <v-btn variant="outlined" color="primary" @click="back()">
+      <v-icon icon="mdi-arrow-left"/>
+      {{ $t("snake.return") }}
+    </v-btn>
+  </v-container>
+
   <v-card class="main-card" elevation="10">
     <canvas ref="board" width="670" height="600" style="display: block; margin: auto;" />
   </v-card>
@@ -76,12 +83,16 @@ export default defineComponent({
       velocity: 0,
       velocityMultiplier: 1,
 
+
       id: null,
       color: "#" + Math.floor(Math.random() * 16777215).toString(16),
       score: 0,
     };
   },
   methods: {
+    back() {
+      this.$router.push("/");
+    },
     draw() {
       window.requestAnimationFrame(this.draw);
 
@@ -220,10 +231,10 @@ export default defineComponent({
         } 
 
         //Collision with tail
-        for (let i = this.snakeBody.length - 1; i > 10; i--) {
+        for (let i = this.snakeBody.length - 1; i > 20; i--) {
           const isColliding = this.isColliding(this.snakeBody[i].x, this.snakeBody[i].y, this.snakeBody[i].radius)
           if (isColliding) {
-            //this.gameOver();
+            this.gameOver();
           }
         }
 
@@ -304,9 +315,9 @@ export default defineComponent({
     },
     onGameStateUpdate(state) {
       if(state == GameStates.GAME_START) {
-        this.dx = 1;
+        this.dx = 5;
         this.dy = 0;
-        this.velocity = 2;
+        this.velocity = 5;
         this.velocityMultiplier = 1;
       }
     },
@@ -323,10 +334,10 @@ export default defineComponent({
       this.powerup = null;
     },
     startPowerUpEffect(data: any) {
-      this.velocityMultiplier = 2;
+      this.velocityMultiplier = 10;
     },
     stopPowerUpEffect() {
-     this.velocityMultiplier = 1;
+     this.velocityMultiplier = 5;
     },
     gameOver() {
       this.network?.updatePlayerState(PlayerStates.PLAYER_DEAD);
@@ -338,9 +349,9 @@ export default defineComponent({
     reset() {
       this.paused = false;
       this.snakeBody = [];
-      this.dx = 1;
+      this.dx = 5;
       this.dy = 0;
-      this.velocity = 2;
+      this.velocity = 5;
       this.velocityMultiplier = 1;
 
       this.x = this.canvas.width / 2;
