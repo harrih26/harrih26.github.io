@@ -39,31 +39,19 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
-enum GameStates {
-  GAME_IDLE = "GAME_IDLE",
-  GAME_COUNTDOWN = "GAME_COUNTDOWN",
-  GAME_START = "GAME_START",
-  GAME_ON = "GAME_ON",
-  GAME_OVER = "GAME_OVER",
-}
-
-enum PlayerStates {
-  PLAYER_ALIVE = "PLAYER_ALIVE",
-  PLAYER_DEAD = "PLAYER_DEAD",
-}
+const colors = ["red", "lightred", "green", "lightgreen", "blue", "lightblue", "orange", "purple", "pink", "brown", "black"];
 
 export default defineComponent({
   name: "GameCanvas",
   data() {
     return {
-      interval: 1000 / 60, //Max 60fps
+      interval: 1000 / 60,
       lastTime: performance.now(),
       currentTime: 0,
       delta: 0,
       times: [],
       fps: 0,
       paused: false,
-      network: null,
 
       leftPressed: false,
       rightPressed: false,
@@ -85,7 +73,7 @@ export default defineComponent({
 
 
       id: null,
-      color: "#" + Math.floor(Math.random() * 16777215).toString(16),
+      color: "red",
       score: 0,
     };
   },
@@ -122,13 +110,17 @@ export default defineComponent({
       }
     },
     debugInfo() {
+      this.ctx.font = "18px Calibri";
+      this.ctx.fillStyle = "#000";
+      this.ctx.fillText("POINTS: " + this.score, 10, 20);
+
       this.ctx.font = "14px Calibri";
       this.ctx.fillStyle = "#000";
-      this.ctx.fillText("FPS: " + this.fps, 10, 20);
-      this.ctx.fillText("x: " + this.x, 10, 40);
-      this.ctx.fillText("y: " + this.y, 10, 60);
-      this.ctx.fillText("dx: " + this.dx, 10, 80);
-      this.ctx.fillText("dy: " + this.dy, 10, 100);
+      this.ctx.fillText("FPS: " + this.fps, 10, 40);
+      this.ctx.fillText("x: " + this.x, 10, 60);
+      this.ctx.fillText("y: " + this.y, 10, 80);
+      this.ctx.fillText("dx: " + this.dx, 10, 100);
+      this.ctx.fillText("dy: " + this.dy, 10, 120);
     },
     drawSnake() {
       if (!this.paused) {
@@ -163,14 +155,10 @@ export default defineComponent({
         });
       }
 
-      /*if (this.snakeBody.length > 500) {
+      if (this.snakeBody.length > (this.score + 1) * 50) {
         this.snakeBody.pop();
-      }*/
-      
-      if(this.network) {
-        this.network.sendPosition(this.snakeBody);
       }
-
+      
       for (let p = 0; p < this.otherPlayers.length; p++) {
         this.ctx.beginPath();
         this.ctx.fillStyle = this.otherPlayers[p].color;
@@ -189,11 +177,22 @@ export default defineComponent({
       }
     },
     drawPowerUps() {
-      if (this.powerup) {
-        this.ctx.beginPath();
-        this.ctx.fillStyle = this.powerup.color;
-        this.ctx.fillRect(this.powerup.x, this.powerup.y, this.powerup.radius, this.powerup.radius);
-        this.ctx.closePath();
+      if (!this.paused) {
+        if (!this.powerup) {
+          this.powerup = {
+            x: Math.floor(Math.random() * this.canvas.width),
+            y: Math.floor(Math.random() * this.canvas.height),
+            radius: 10,
+            color: "green"
+          };
+        }
+
+        if (this.powerup) {
+          this.ctx.beginPath();
+          this.ctx.fillStyle = this.powerup.color;
+          this.ctx.fillRect(this.powerup.x, this.powerup.y, this.powerup.radius, this.powerup.radius);
+          this.ctx.closePath();
+        }
       }
     },
     movement() {
@@ -314,7 +313,7 @@ export default defineComponent({
       }
     },
     onGameStateUpdate(state) {
-      if(state == GameStates.GAME_START) {
+      if(!this.paused) {
         this.dx = 5;
         this.dy = 0;
         this.velocity = 5;
@@ -324,13 +323,8 @@ export default defineComponent({
     onPlayerStateUpdate(state) {
       
     },
-    spawnPowerUp(data) {
-      this.powerup = data;
-    },
     pickPowerUp() {
-      this.network?.pickPowerUp(this.powerup);
-    },
-    removePowerUp() {
+      this.score++;
       this.powerup = null;
     },
     startPowerUpEffect(data: any) {
@@ -340,7 +334,6 @@ export default defineComponent({
      this.velocityMultiplier = 5;
     },
     gameOver() {
-      this.network?.updatePlayerState(PlayerStates.PLAYER_DEAD);
       this.paused = true;
     },
     unpause() {
@@ -348,11 +341,14 @@ export default defineComponent({
     },
     reset() {
       this.paused = false;
+      this.powerup = null;
       this.snakeBody = [];
+      this.color = colors[Math.floor(Math.random() * colors.length)]
       this.dx = 5;
       this.dy = 0;
       this.velocity = 5;
       this.velocityMultiplier = 1;
+      this.score = 0;
 
       this.x = this.canvas.width / 2;
       this.y = this.canvas.height / 2;
