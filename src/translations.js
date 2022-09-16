@@ -3,7 +3,7 @@ const translations = {
     about: {
       title: "About me",
       about1:
-        "I'm a software developer from Kuopio, Finland. I have experience on various projects and technologies, including web development, mobile applications, and desktop software.",
+        "I'm a software developer from Kuopio, Finland. I have experience on various projects and technologies, including web development and mobile applications.",
       about2:
         "My focus is on backend development like databases, integrations and APIs but I'm always eager to try new things. Providing good quality and maximum value to the customer is my main goal.",
       email: "Email me",
@@ -32,7 +32,7 @@ const translations = {
     about: {
       title: "Minusta",
       about1:
-        "Olen koodari Kuopiosta. Kokemusta löytyy mm. web-kehityksestä, mobiilisovelluksista sekä työpöytäsoftasta.",
+        "Olen ohjelmistokehittäjä Kuopiosta. Kokemusta löytyy mm. web-kehityksestä ja mobiilisovelluksista.",
       about2:
         "Keskityn enemmän pellin alla työskentelyyn eli esim. tietokantoihin, integraatioihin ja rajapintoihin mutta olen aina innokas kokeilemaan uutta. Työn laatu ja asiakkaan arvon maksimointi on minulle tärkeää.",
       email: "Lähetä sähköpostia",

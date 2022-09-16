@@ -1,16 +1,7 @@
 <template>
-  <v-container>
+  <v-container fill-height fluid>
     <Transition appear name="slide-right">
-      <AboutCard />
-    </Transition>
-    <Transition appear name="slide-left">
-      <ExperienceCard />
-    </Transition>
-    <Transition appear name="slide-right">
-      <CertificationsCard />
-    </Transition>
-    <Transition appear name="slide-left">
-      <TechCard />
+      <AboutCard style="margin-top: 10%;" />
     </Transition>
   </v-container>
 </template>
@@ -18,17 +9,11 @@
 <script>
 import { defineComponent } from "vue";
 import AboutCard from "../components/AboutCard.vue";
-import TechCard from "../components/TechCard.vue";
-import CertificationsCard from "../components/CertificationsCard.vue";
-import ExperienceCard from "../components/ExperienceCard.vue";
 
 export default defineComponent({
   name: "AboutView",
   components: {
     AboutCard,
-    TechCard,
-    CertificationsCard,
-    ExperienceCard,
   },
 });
 </script>

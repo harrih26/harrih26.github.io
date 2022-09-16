@@ -8,16 +8,10 @@ import { createVuetify } from "vuetify";
 const customTheme = {
   dark: false,
   colors: {
-    background: "#FFFFFF",
-    surface: "#FFFFFF",
-    primary: "#406e44",
-    "primary-darken-1": "#406e44",
-    secondary: "#03DAC6",
-    "secondary-darken-1": "#018786",
-    error: "#B00020",
-    info: "#439194",
-    success: "#4CAF50",
-    warning: "#FB8C00",
+    background: "#5f5f60",
+    surface: "#3F3E43",
+    primary: "#347D39",
+    secondary: "#373E47",
   },
 };
 
