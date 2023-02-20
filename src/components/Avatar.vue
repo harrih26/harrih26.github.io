@@ -6,7 +6,7 @@
 
 <script>
 import { defineComponent } from "vue";
-import avatar from "../assets/avatar.jpg";
+import avatar from "../assets/Heikkinen_Harri.jpg";
 
 export default defineComponent({
   name: "Avatar",
@@ -25,7 +25,7 @@ export default defineComponent({
 
 .v-enter-active,
 .v-leave-active {
-  transition: opacity 5s ease;
+  transition: opacity 10s ease;
 }
 
 .v-enter-from,

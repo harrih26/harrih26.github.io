@@ -1,14 +1,11 @@
 <template>
   <v-card class="main-card" elevation="14">
-    <v-card-title>
-      {{ $t("about.title") }}
-    </v-card-title>
     <v-card-text>
       <v-row>
-        <v-col xs="12" md="4" xl="auto">
+        <v-col xs="12" md="4">
           <Avatar/>
         </v-col>
-        <v-col xs="12" md="8" xl="auto">
+        <v-col xs="12" md="8">
           <p>
             {{ $t("about.about1") }} <br/><br/>
             {{ $t("about.about2") }}
@@ -50,10 +47,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-p {
-  color: #ADBAC2;
-}
-
 .link-button {
   font-weight: normal;
   background-color: #347D39;

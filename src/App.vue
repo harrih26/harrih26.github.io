@@ -13,6 +13,12 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@200&display=swap');
+
+p {
+  font-family: "Roboto Mono";
+}
+
 small {
   cursor: pointer;
 }
@@ -22,10 +28,12 @@ small {
 }
 
 .v-card-title {
-  color: #d2dade;
+  font-family: "Roboto Mono";
+  font-weight: bold;
 }
 
 .v-card {
   border: 1px solid green;
+  font-family: "Roboto Mono";
 }
 </style>
