@@ -1,6 +1,6 @@
 <template>
   <Transition appear name="fade-in">
-    <v-img :src="avatar" class="avatar" />
+      <v-img :src="avatar" class="avatar" />
   </Transition>
 </template>
 
