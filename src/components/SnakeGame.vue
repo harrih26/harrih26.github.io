@@ -1,13 +1,17 @@
 <template>
-  <v-container class="main-card">
-    <v-btn variant="outlined" color="primary" @click="back()">
-      <v-icon icon="mdi-arrow-left"/>
-      {{ $t("snake.return") }}
-    </v-btn>
-  </v-container>
-
   <v-card class="main-card" elevation="10">
     <canvas ref="board" width="670" height="600" style="display: block; margin: auto;" />
+    <!-- Add welcome screen overlay -->
+    <div v-if="showWelcomeScreen" class="overlay-screen welcome-screen">
+      <h2>{{ $t("snake.welcome") }}</h2>
+      <p>{{ $t("snake.pressToStart") }}</p>
+    </div>
+    <!-- Add game over screen overlay -->
+    <div v-if="showGameOverScreen" class="overlay-screen game-over-screen">
+      <h2>{{ $t("snake.gameOver") }}</h2>
+      <p>{{ $t("snake.finalScore", { score: score }) }}</p>
+      <p>{{ $t("snake.pressToRestart") }}</p>
+    </div>
   </v-card>
   <v-card class="main-card" elevation="10">
     <v-card-title>
@@ -16,19 +20,13 @@
     </v-card-title>
     <v-card-text>
         <v-row style="margin-top: 10px">
-            <v-col xs="12" md="6" >
+            <v-col xs="12">
                 <p>
                     <v-icon icon="mdi-alpha-w" color="warning" size="large" />
                     <v-icon icon="mdi-alpha-a" color="warning" size="large" />
                     <v-icon icon="mdi-alpha-s" color="warning" size="large" />
                     <v-icon icon="mdi-alpha-d" color="warning" size="large" />
                     {{ $t("snake.move") }}
-                </p>
-            </v-col>
-            <v-col xs="12" md="6" >
-                <p>
-                    <v-icon icon="mdi-alpha-i" color="warning" size="large" />
-                    {{ $t("snake.reset") }}
                 </p>
             </v-col>
         </v-row>
@@ -70,11 +68,13 @@ export default defineComponent({
       dy: 0,
       velocity: 0,
       velocityMultiplier: 1,
-
+      spawnSafeArea: 5,
 
       id: null,
       color: "red",
       score: 0,
+      showWelcomeScreen: true,
+      showGameOverScreen: false,
     };
   },
   methods: {
@@ -100,11 +100,13 @@ export default defineComponent({
         this.ctx.fillStyle = "#e8e8e8";
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-        this.debugInfo();
-        this.drawSnake();
-        this.drawPowerUps();
-        this.movement();
-        this.checkCollision();
+        if (!this.showWelcomeScreen && !this.showGameOverScreen) {
+          this.debugInfo();
+          this.drawSnake();
+          this.drawPowerUps();
+          this.movement();
+          this.checkCollision();
+        }
 
         this.lastTime = this.currentTime - (this.delta % this.interval);
       }
@@ -116,11 +118,11 @@ export default defineComponent({
 
       this.ctx.font = "14px Calibri";
       this.ctx.fillStyle = "#000";
-      this.ctx.fillText("FPS: " + this.fps, 10, 40);
+      /*this.ctx.fillText("FPS: " + this.fps, 10, 40);
       this.ctx.fillText("x: " + this.x, 10, 60);
       this.ctx.fillText("y: " + this.y, 10, 80);
       this.ctx.fillText("dx: " + this.dx, 10, 100);
-      this.ctx.fillText("dy: " + this.dy, 10, 120);
+      this.ctx.fillText("dy: " + this.dy, 10, 120);*/
     },
     drawSnake() {
       if (!this.paused) {
@@ -180,8 +182,8 @@ export default defineComponent({
       if (!this.paused) {
         if (!this.powerup) {
           this.powerup = {
-            x: Math.floor(Math.random() * this.canvas.width),
-            y: Math.floor(Math.random() * this.canvas.height),
+            x: Math.floor(Math.random() * (this.canvas.width - this.spawnSafeArea)),
+            y: Math.floor(Math.random() * (this.canvas.height - this.spawnSafeArea)),
             radius: 10,
             color: "green"
           };
@@ -267,6 +269,11 @@ export default defineComponent({
       return overlapX && overlapY;
     },
     keyDownHandler(e: KeyboardEvent) {
+      if (this.showWelcomeScreen || this.showGameOverScreen) {
+        this.startGame()
+        return
+      }
+
       switch (e.key) {
         case "d":
           this.rightPressed = true;
@@ -280,11 +287,23 @@ export default defineComponent({
         case "s":
           this.downPressed = true;
           break;
+        case "ArrowRight":
+          this.rightPressed = true;
+          break;
+        case "ArrowLeft":
+          this.leftPressed = true;
+          break;
+        case "ArrowUp":
+          this.upPressed = true;
+          break;
+        case "ArrowDown":
+          this.downPressed = true;
+          break;
         case "p":
           if (this.paused) {
             this.unpause();
           } else {
-            this.gameOver();
+            this.pause();
           }
           break;
         case "i":
@@ -294,7 +313,7 @@ export default defineComponent({
           break;
       }
     },
-    keyUpHandler(e) {
+    keyUpHandler(e: KeyboardEvent) {
       switch (e.key) {
         case "d":
           this.rightPressed = false;
@@ -308,11 +327,23 @@ export default defineComponent({
         case "s":
           this.downPressed = false;
           break;
+        case "ArrowRight":
+          this.rightPressed = false;
+          break;
+        case "ArrowLeft":
+          this.leftPressed = false;
+          break;
+        case "ArrowUp":
+          this.upPressed = false;
+          break;
+        case "ArrowDown":
+          this.downPressed = false;
+          break;
         default:
           break;
       }
     },
-    onGameStateUpdate(state) {
+    onGameStateUpdate() {
       if(!this.paused) {
         this.dx = 5;
         this.dy = 0;
@@ -320,7 +351,7 @@ export default defineComponent({
         this.velocityMultiplier = 1;
       }
     },
-    onPlayerStateUpdate(state) {
+    onPlayerStateUpdate() {
       
     },
     pickPowerUp() {
@@ -335,11 +366,14 @@ export default defineComponent({
     },
     gameOver() {
       this.paused = true;
+      this.showGameOverScreen = true;
     },
     unpause() {
       this.paused = false;
     },
     reset() {
+      this.showWelcomeScreen = false;
+      this.showGameOverScreen = false;
       this.paused = false;
       this.powerup = null;
       this.snakeBody = [];
@@ -352,6 +386,15 @@ export default defineComponent({
 
       this.x = this.canvas.width / 2;
       this.y = this.canvas.height / 2;
+    },
+    startGame() {
+      this.showWelcomeScreen = false;
+      this.showGameOverScreen = false;
+      this.reset();
+      this.unpause();
+    },
+    pause() {
+      this.paused = true;
     },
   },
   computed: {
@@ -377,7 +420,6 @@ export default defineComponent({
       window.cancelAnimationFrame = window[vendors[x] + "CancelAnimationFrame"] || window[vendors[x] + "CancelRequestAnimationFrame"];
     }
 
-    this.reset();
     this.draw();
   },
 });
@@ -387,5 +429,34 @@ export default defineComponent({
 canvas {
   border: 1px solid black;
   border-radius: 5px;
+}
+
+.welcome-screen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  color: #000;
+}
+
+.overlay-screen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  color: #000;
+}
+
+.game-over-screen {
+  background-color: rgba(255, 0, 0, 0.8);
+  color: #fff;
 }
 </style>

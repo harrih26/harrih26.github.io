@@ -26,6 +26,11 @@ const translations = {
       move: "Change direction",
       reset: "Reset",
       return: "Return",
+      welcome: "Welcome to Snake!",
+      pressToStart: "Press any key to start",
+      gameOver: "Game over",
+      finalScore: "Final score: {score}",
+      pressToRestart: "Press any key to restart",
     },
   },
   fi: {
@@ -55,6 +60,11 @@ const translations = {
       move: "Vaihda suuntaa",
       reset: "Aloita alusta",
       return: "Takaisin",
+      welcome: "Mato",
+      pressToStart: "Paina mitä tahansa näppäintä aloittaaksesi",
+      gameOver: "Peli ohi",
+      finalScore: "Tulos: {score}",
+      pressToRestart: "Paina mitä tahansa näppäintä aloittaaksesi",
     },
   },
 };
